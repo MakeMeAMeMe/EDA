@@ -16,8 +16,10 @@ struct descritor {
 };
 
 void cria_pilha(descritor**);
-void destroi_pilha(descritor**);
+void destroi_pilha(descritor*);
+void reinicia_pilha(descritor*);
 void adiciona_topo(descritor*, char[TAMANHO_MAX_TAG]);
-void remove_topo(descritor*, nodo**);
+void print_pilha(descritor*);
+void remove_topo(descritor*);
 
 #endif

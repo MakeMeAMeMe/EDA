@@ -1,37 +1,51 @@
-#include <stdlib.h>
-#include <string.h>
 #include "pilha.h"
 
-void cria_pilha(descritor** pilha){
-    *pilha = (descritor*) malloc(sizeof(descritor));
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+void cria_pilha(descritor** pilha) {
+    *pilha = (descritor*)malloc(sizeof(descritor));
     (*pilha)->topo = NULL;
 }
 
-void destroi_pilha(descritor** pilha){
+void reinicia_pilha(descritor* pilha){
     nodo* aux;
-    while ((*pilha)->topo != NULL)
-    {
-        aux = (*pilha)->topo->abaixo;
-        free((*pilha)->topo);
-        (*pilha)->topo = aux;
+    while (pilha->topo != NULL) {
+        aux = pilha->topo->abaixo;
+        free(pilha->topo);
+        pilha->topo = aux;
     }
-    free(*pilha);
 }
 
-void adiciona_topo(descritor* pilha, char info[TAMANHO_MAX_TAG]){
-    nodo* container_info = (nodo*) malloc(sizeof(nodo));
+void destroi_pilha(descritor* pilha) {
+    reinicia_pilha(pilha);
+    free(pilha);
+}
+
+void adiciona_topo(descritor* pilha, char *info) {
+    nodo* container_info = (nodo*)malloc(sizeof(nodo));
     container_info->abaixo = pilha->topo;
-    strcpy(container_info->tag, info);
+    strncpy(container_info->tag, info, TAMANHO_MAX_TAG);
     pilha->topo = container_info;
 }
 
-void remove_topo(descritor* pilha, nodo** info_removida){
-    if(pilha->topo == NULL){
-        *info_removida = NULL;
+void remove_topo(descritor* pilha) {
+    if (pilha->topo == NULL) {
         return;
     }
     nodo* aux = pilha->topo->abaixo;
-    memcpy(*info_removida, pilha->topo, sizeof(nodo));
     free(pilha->topo);
     pilha->topo = aux;
+}
+
+void print_pilha(descritor* pilha){
+    nodo* aux; 
+    aux = pilha->topo;
+    printf("pilha");
+    while(aux != NULL ){
+        printf("->%s", aux->tag);
+        aux = aux->abaixo;
+    }
+    printf("\n");
 }

@@ -19,17 +19,19 @@ void trim(char* str) {
     int begin = 0;
     int end = strlen(str) - 1;
 
-    while (isspace((unsigned char)str[begin]))
+    while (isspace(str[begin])) {
         begin++;
+    }
 
-    while ((end >= begin) && isspace((unsigned char)str[end]))
+    while ((end >= begin) && isspace(str[end])) {
         end--;
+    }
 
-    // Shift all characters back to the start of the string array.
-    for (i = begin; i <= end; i++)
+    for (i = begin; i <= end; i++) {
         str[i - begin] = str[i];
+    }
 
-    str[i - begin] = '\0';  // Null terminate string.
+    str[i - begin] = '\0';
 }
 
 unsigned short verify_file(const char* filename, descritor* pilha) {
@@ -56,7 +58,7 @@ unsigned short verify_file(const char* filename, descritor* pilha) {
         if (strcmp(line_buffer, "") || strlen(line_buffer) > 0) {
             if (line_buffer[0] == '<') {
                 // It's a tag
-                    print_pilha(pilha);
+                print_pilha(pilha);
                 if (line_buffer[1] == '/') {
                     // it's a closing tag
                     if (strcmp(line_buffer + 2, pilha->topo->tag + 1) == 0) {
